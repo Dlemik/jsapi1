@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Ghibli Movie</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f0f8ff;
+      color: #333;
+      text-align: center;
+      padding: 30px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1 {
+      font-size: 30px;
+      color: #2c3e50;
+    }
+
+    #desc {
+      max-width: 600px;
+      margin: 20px auto;
+      font-size: 18px;
+      line-height: 1.6;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    #darkModeButton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #34495e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #darkModeButton:hover {
+      background-color: #2c3e50;
+    }
+
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+
+      #desc {
+        font-size: 16px;
+        padding: 15px;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 8px 16px;
+      }
+    }
+
+    .dark-mode {
+      background-color: black;
+      color: #ecf0f1;
+    }
+
+    .dark-mode #desc {
+      background-color: #34495e;
+      color: #ecf0f1;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="title">🎬 Movie Title</h1>
+  <p id="desc">Movie Description</p>
+
+  <button onclick="getMovie()">Show Movie</button>
+    <button id="darkModeButton" onclick="toggleDarkMode()">
+    <i class="fas fa-sun"></i> Switch
+  </button>
+
+  <script>
+    function getMovie() {
+      fetch('https://ghibliapi.vercel.app/films')
+        .then(function(res) {
+          return res.json();
+        })
+        .then(function(data) {
+          var film = data[Math.floor(Math.random() * data.length)];
+          document.getElementById('title').innerText = "🎬 " + film.title + " (" + film.release_date + ")";
+          document.getElementById('desc').innerText = film.description;
+        });
+    }
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+    getMovie();
+  </script>
+</body>
+</html>
